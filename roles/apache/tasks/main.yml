@@ -1,0 +1,6 @@
+---
+# example role: apache
+- name: Ensure apache is installed
+  package:
+    name: "{{ apache_package }}"
+    state: present

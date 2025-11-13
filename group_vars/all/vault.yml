@@ -1,0 +1,9 @@
+# **WARNING**: This file contains sensitive placeholders.
+# Encrypt this file with `ansible-vault encrypt group_vars/all/vault.yml`
+vault_mysql_root_password: "SecureRootPassword123!"
+vault_mysql_app_password: "AppPassword456!"
+vault_ssl_cert_path: "/etc/ssl/certs/company.crt"
+vault_ssl_key_path: "/etc/ssl/private/company.key"
+vault_backup_api_key: "backup_api_key_here"
+vault_monitoring_token: "monitoring_token_here"
+vault_admin_password: "AdminSecurePass789!"

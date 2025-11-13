@@ -1,0 +1,4 @@
+# Ignore vault password files and local facts
+.vault_pass
+*.retry
+.ansible/

@@ -1,0 +1,15 @@
+max_workers: "{{ ansible_processor_vcpus | default(1) * 2 }}"
+max_connections: 1000
+keepalive_timeout: 65
+
+php_version: "7.4"
+php_memory_limit: "{% if ansible_memtotal_mb is defined and ansible_memtotal_mb > 4096 %}512M{% else %}256M{% endif %}"
+php_max_execution_time: 30
+
+virtual_hosts:
+  - name: "{{ app_name }}.local"
+    document_root: "{{ web_root }}/{{ app_name }}"
+    ssl_enabled: "{{ ssl_enabled }}"
+  - name: "api.{{ app_name }}.local"
+    document_root: "{{ web_root }}/api"
+    ssl_enabled: "{{ ssl_enabled }}"

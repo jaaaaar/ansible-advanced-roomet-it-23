@@ -1,0 +1,17 @@
+app_name: "advanced-lamp"
+app_version: "1.0.0"
+admin_email: "admin@company.com"
+
+apache_package: "{% if ansible_os_family == 'Debian' %}apache2{% else %}httpd{% endif %}"
+mysql_package: "{% if ansible_os_family == 'Debian' %}mysql-server{% else %}mariadb-server{% endif %}"
+
+backup_enabled: "{{ app_env == 'production' }}"
+monitoring_enabled: "{{ app_env == 'production' }}"
+log_level: "{% if debug_mode %}DEBUG{% else %}INFO{% endif %}"
+
+# Map to vault variables (these variables expect to come from group_vars/all/vault.yml)
+mysql_root_password: "{{ vault_mysql_root_password | default('changeme') }}"
+mysql_app_password: "{{ vault_mysql_app_password | default('changeme_app') }}"
+ssl_cert_path: "{{ vault_ssl_cert_path | default('/etc/ssl/certs/server.crt') }}"
+ssl_key_path: "{{ vault_ssl_key_path | default('/etc/ssl/private/server.key') }}"
+admin_password: "{{ vault_admin_password | default('adminchangeme') }}"

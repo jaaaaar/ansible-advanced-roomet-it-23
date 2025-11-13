@@ -1,0 +1,43 @@
+# {{ ansible_managed }}
+# Virtual Host for {{ item.name }}
+# Generated on {{ ansible_date_time.iso8601 }}
+
+<VirtualHost *:{{ http_port }}>
+    ServerName {{ item.name }}
+    DocumentRoot {{ item.document_root }}
+
+    {% if debug_mode %}
+    LogLevel debug
+    {% else %}
+    LogLevel warn
+    {% endif %}
+    ErrorLog ${APACHE_LOG_DIR}/{{ item.name }}_error.log
+    CustomLog ${APACHE_LOG_DIR}/{{ item.name }}_access.log combined
+
+    <Directory {{ item.document_root }}>
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+        {% if app_env == 'production' %}
+        # Production security headers
+        Header always set X-Frame-Options DENY
+        Header always set X-Content-Type-Options nosniff
+        Header always set X-XSS-Protection "1; mode=block"
+        {% endif %}
+    </Directory>
+</VirtualHost>
+
+{% if item.ssl_enabled and ssl_enabled %}
+<IfModule mod_ssl.c>
+# SSL Virtual Host
+<VirtualHost *:{{ https_port }}>
+    ServerName {{ item.name }}
+    DocumentRoot {{ item.document_root }}
+
+    SSLEngine on
+    SSLProtocol TLSv1.2 TLSv1.3
+    SSLCertificateFile {{ ssl_cert_path | default('/etc/ssl/certs/server.crt') }}
+    SSLCertificateKeyFile {{ ssl_key_path | default('/etc/ssl/private/server.key') }}
+</VirtualHost>
+</IfModule>
+{% endif %}

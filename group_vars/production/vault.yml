@@ -1,0 +1,11 @@
+# Production vault sample (ENCRYPT before use)
+vault_ssl_cert_content: |
+  -----BEGIN CERTIFICATE-----
+  [certificate content here]
+  -----END CERTIFICATE-----
+vault_ssl_key_content: |
+  -----BEGIN PRIVATE KEY-----
+  [private key content here]
+  -----END PRIVATE KEY-----
+vault_production_db_host: "prod-db.company.com"
+vault_production_db_password: "ProdDbPass123!"
