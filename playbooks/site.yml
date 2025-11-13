@@ -1,4 +1,4 @@
----
+                      ---
 - name: "LAMP Stack Deployment with Advanced Configuration"
   hosts: all
   become: yes
